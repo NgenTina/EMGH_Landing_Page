@@ -1,10 +1,31 @@
-import { motion } from "framer-motion";
+import { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { MapPin, ChevronDown } from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
 import Button from "../ui/Button";
 
 export default function HeroSection() {
   const { t } = useLanguage();
+  const [selectedRoomIndex, setSelectedRoomIndex] = useState<number>(0);
+  const [selectedGuestIndex, setSelectedGuestIndex] = useState<number>(0);
+  const [openDropdown, setOpenDropdown] = useState<"room" | "guest" | null>(null);
+
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const roomTypes = t.hero.roomTypes || ["Single Room", "Deluxe Suite", "Family Room", "VIP Suite"];
+  const guestTypes = Array.isArray(t.hero.house)
+    ? t.hero.house
+    : ["Private Room", "Shared Room"];
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setOpenDropdown(null);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <section
@@ -41,80 +62,123 @@ export default function HeroSection() {
           >
             {t.hero.description}
           </motion.p>
-
-          {/* Floating Property Card (Hero Decoration) */}
-          {/* <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="hidden lg:block absolute right-5 top-12 -translate-y-1/2 bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-2xl max-w-xs text-left"
-          >
-            <div className="flex items-start gap-3 mb-2">
-              <div className="bg-white/20 p-2 rounded-lg">
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="text-white"
-                >
-                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                  <polyline points="9 22 9 12 15 12 15 22" />
-                </svg>
-              </div>
-              <div>
-                <h4 className="font-bold text-white">Sunrise Suite</h4>
-                <p className="text-xs text-white/70">
-                  123 Hospitality Lane, Charming Town
-                </p>
-              </div>
-            </div>
-            <button className="w-full mt-2 bg-white text-slate-900 text-xs font-bold py-2 rounded-lg hover:bg-white/90 transition-colors">
-              {t.services.learnMore}
-            </button>
-          </motion.div> */}
         </div>
 
         {/* Search Bar */}
         <motion.div
+          ref={containerRef}
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="bg-white rounded-4xl p-2 shadow-2xl max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-2"
+          className="bg-white rounded-3xl md:rounded-full p-2 shadow-2xl max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-2 relative z-20"
         >
-          <div className="flex-1 w-full md:w-auto px-6 py-3 border-b md:border-b-0 md:border-r border-slate-100">
+          {/* Room Type Dropdown */}
+          <div className="relative flex-1 w-full md:w-auto px-6 py-3 border-b md:border-b-0 md:border-r border-slate-100">
             <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">
               {t.hero.rentBuy}
             </label>
-            <div className="flex items-center justify-between cursor-pointer">
-              <span className="font-medium text-slate-900">{t.hero.rent}</span>
-              <ChevronDown size={16} className="text-slate-400" />
+            <div
+              onClick={() => setOpenDropdown(openDropdown === "room" ? null : "room")}
+              className="flex items-center justify-between cursor-pointer select-none"
+            >
+              <span className="font-medium text-slate-900">
+                {roomTypes[selectedRoomIndex] || roomTypes[0]}
+              </span>
+              <ChevronDown
+                size={16}
+                className={`text-slate-400 transition-transform ${openDropdown === "room" ? "rotate-180" : ""}`}
+              />
             </div>
+
+            <AnimatePresence>
+              {openDropdown === "room" && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  className="absolute left-0 right-0 top-full mt-2 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 z-30 max-h-48 overflow-y-auto"
+                >
+                  {roomTypes.map((type, idx) => (
+                    <button
+                      key={type}
+                      onClick={() => {
+                        setSelectedRoomIndex(idx);
+                        setOpenDropdown(null);
+                      }}
+                      className={`w-full px-6 py-2 text-left text-sm transition-colors hover:bg-slate-50 ${
+                        selectedRoomIndex === idx
+                          ? "font-bold text-slate-900 bg-slate-50"
+                          : "text-slate-600"
+                      }`}
+                    >
+                      {type}
+                    </button>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
-          <div className="flex-1 w-full md:w-auto px-6 py-3 border-b md:border-b-0 md:border-r border-slate-100">
+
+          {/* Guest / House Type Dropdown */}
+          <div className="relative flex-1 w-full md:w-auto px-6 py-3 border-b md:border-b-0 md:border-r border-slate-100">
             <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">
               {t.hero.type}
             </label>
-            <div className="flex items-center justify-between cursor-pointer">
-              <span className="font-medium text-slate-900">{t.hero.house}</span>
-              <ChevronDown size={16} className="text-slate-400" />
+            <div
+              onClick={() => setOpenDropdown(openDropdown === "guest" ? null : "guest")}
+              className="flex items-center justify-between cursor-pointer select-none"
+            >
+              <span className="font-medium text-slate-900">
+                {guestTypes[selectedGuestIndex] || guestTypes[0]}
+              </span>
+              <ChevronDown
+                size={16}
+                className={`text-slate-400 transition-transform ${openDropdown === "guest" ? "rotate-180" : ""}`}
+              />
             </div>
+
+            <AnimatePresence>
+              {openDropdown === "guest" && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  className="absolute left-0 right-0 top-full mt-2 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 z-30"
+                >
+                  {guestTypes.map((gt, idx) => (
+                    <button
+                      key={gt}
+                      onClick={() => {
+                        setSelectedGuestIndex(idx);
+                        setOpenDropdown(null);
+                      }}
+                      className={`w-full px-6 py-2 text-left text-sm transition-colors hover:bg-slate-50 ${
+                        selectedGuestIndex === idx
+                          ? "font-bold text-slate-900 bg-slate-50"
+                          : "text-slate-600"
+                      }`}
+                    >
+                      {gt}
+                    </button>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
+
+          {/* Location */}
           <div className="flex-2 w-full md:w-auto px-6 py-3">
             <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">
               {t.hero.location}
             </label>
             <div className="flex items-center gap-2">
-              <MapPin size={16} className="text-slate-400" />
-              <span className="font-medium text-slate-900">
+              <MapPin size={16} className="text-slate-400 shrink-0" />
+              <span className="font-medium text-slate-900 truncate">
                 {t.hero.placeLocation}
               </span>
             </div>
           </div>
+
           <Button
             onClick={() => (window.location.href = "tel:+855977979220")}
             className="w-full md:w-auto rounded-full px-8 bg-slate-900 hover:bg-slate-800 text-white shadow-lg"
