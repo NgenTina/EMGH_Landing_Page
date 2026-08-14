@@ -1,6 +1,6 @@
-import { useLanguage } from '../../contexts/LanguageContext';
-import SectionHeading from '../ui/SectionHeading';
-import PropertyCard from '../cards/PropertyCard';
+import { useLanguage } from '../../contexts/language-context';
+import SectionHeading from '../ui/section-heading';
+import PropertyCard from '../cards/property-card';
 
 export default function PropertiesSection() {
   const { t } = useLanguage();

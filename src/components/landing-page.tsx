@@ -1,12 +1,12 @@
 import { useCallback } from "react";
-import Navbar from "./sections/Navbar";
-import HeroSection from "./sections/HeroSection";
-import ServicesSection from "./sections/ServicesSection";
-import FeaturedSection from "./sections/FeaturedSection";
-import TestimonialsSection from "./sections/TestimonialsSection";
-import CTASection from "./sections/CTASection";
-import Footer from "./sections/Footer";
-import { useLanguage } from "../contexts/LanguageContext";
+import Navbar from "./sections/navbar";
+import HeroSection from "./sections/hero-section";
+import ServicesSection from "./sections/services-section";
+import FeaturedSection from "./sections/featured-section";
+import TestimonialsSection from "./sections/testimonials-section";
+import CTASection from "./sections/cta-section";
+import Footer from "./sections/footer";
+import { useLanguage } from "../contexts/language-context";
 
 export default function LandingPage() {
   const { t } = useLanguage();

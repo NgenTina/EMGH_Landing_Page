@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { useLanguage } from '../../contexts/LanguageContext';
-import FAQItem from '../ui/FAQItem';
+import { useLanguage } from '../../contexts/language-context';
+import FAQItem from '../ui/faq-item';
 
 export default function FAQSection() {
   const { t } = useLanguage();

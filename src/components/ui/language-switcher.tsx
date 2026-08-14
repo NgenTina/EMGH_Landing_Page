@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Languages, ChevronDown } from "lucide-react";
-import { useLanguage } from "../../contexts/LanguageContext";
+import { useLanguage } from "../../contexts/language-context";
 import type { Language } from "../../i18n";
 import { cn } from "../../lib/utils";
 

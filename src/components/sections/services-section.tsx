@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Home, DollarSign, Key, ArrowRight } from 'lucide-react';
-import { useLanguage } from '../../contexts/LanguageContext';
-import SectionHeading from '../ui/SectionHeading';
+import { useLanguage } from '../../contexts/language-context';
+import SectionHeading from '../ui/section-heading';
 
 const services = [
   {

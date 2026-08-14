@@ -5,8 +5,8 @@ import {
   Navigate,
   useParams,
 } from "react-router-dom";
-import { LanguageProvider } from "./contexts/LanguageContext";
-import LandingPage from "./components/LandingPage";
+import { LanguageProvider } from "./contexts/language-context";
+import LandingPage from "./components/landing-page";
 
 function LanguageWrapper() {
   const { lang } = useParams<{ lang: string }>();

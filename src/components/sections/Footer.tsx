@@ -1,4 +1,4 @@
-import { useLanguage } from "../../contexts/LanguageContext";
+import { useLanguage } from "../../contexts/language-context";
 
 const socialLinks = [
   {

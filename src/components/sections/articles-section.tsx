@@ -1,6 +1,6 @@
-import { useLanguage } from '../../contexts/LanguageContext';
-import SectionHeading from '../ui/SectionHeading';
-import ArticleCard from '../cards/ArticleCard';
+import { useLanguage } from '../../contexts/language-context';
+import SectionHeading from '../ui/section-heading';
+import ArticleCard from '../cards/article-card';
 
 const articles = [
   { title: "The Art of Hospitality Breakfast", excerpt: "Discover how our homemade breakfasts create lasting memories for every guest...", img: "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?q=80&w=2070&auto=format&fit=crop" },

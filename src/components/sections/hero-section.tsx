@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MapPin, ChevronDown } from "lucide-react";
-import { useLanguage } from "../../contexts/LanguageContext";
-import Button from "../ui/Button";
+import { useLanguage } from "../../contexts/language-context";
+import Button from "../ui/button";
 
 export default function HeroSection() {
   const { t } = useLanguage();

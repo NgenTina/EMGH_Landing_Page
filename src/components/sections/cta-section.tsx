@@ -1,5 +1,5 @@
-import { useLanguage } from '../../contexts/LanguageContext';
-import Button from '../ui/Button';
+import { useLanguage } from '../../contexts/language-context';
+import Button from '../ui/button';
 
 export default function CTASection() {
   const { t } = useLanguage();
