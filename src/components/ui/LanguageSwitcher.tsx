@@ -39,10 +39,14 @@ export default function LanguageSwitcher({
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          "flex items-center gap-1 px-3 py-2 rounded-full hover:bg-white transition-colors",
-          isMobile &&
-            "w-full justify-center bg-slate-50 border border-slate-200",
-          !isScrolled && "bg-white/80 backdrop-blur-md border-slate-200",
+          "flex items-center gap-1 px-3 py-2 rounded-full transition-colors text-sm font-medium",
+          isMobile
+            ? isScrolled
+              ? "w-full justify-center bg-slate-50 border border-slate-200 text-slate-800"
+              : "w-full justify-center bg-slate-800/80 border border-slate-700 text-white"
+            : isScrolled
+              ? "bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-800"
+              : "bg-white/20 hover:bg-white/30 backdrop-blur-md border border-white/30 text-white",
         )}
         aria-label="Switch language"
       >
@@ -64,9 +68,12 @@ export default function LanguageSwitcher({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             className={cn(
-              "absolute bg-white rounded-lg shadow-lg border border-slate-200 py-1 min-w-25",
+              "absolute rounded-lg shadow-lg border py-1 min-w-25 z-50",
+              !isScrolled && !isMobile
+                ? "bg-slate-900/95 border-slate-700 text-white"
+                : "bg-white border-slate-200 text-slate-800",
               isMobile
-                ? "left-1/2 -translate-x-1/2 bottom-full mb-2"
+                ? "left-1/2 -translate-x-1/2 bottom-full mb-2 bg-slate-900/95 border-slate-700 text-white"
                 : "right-0 top-full mt-2",
             )}
           >
@@ -78,8 +85,14 @@ export default function LanguageSwitcher({
                   setIsOpen(false);
                 }}
                 className={cn(
-                  "w-full px-4 py-2 text-left text-sm hover:bg-slate-50 transition-colors",
-                  language === lang.code ? "bg-slate-100 font-semibold" : "",
+                  "w-full px-4 py-2 text-left text-sm transition-colors",
+                  (!isScrolled || isMobile)
+                    ? language === lang.code
+                      ? "bg-slate-800 font-semibold text-white"
+                      : "hover:bg-slate-800/60 text-slate-200"
+                    : language === lang.code
+                      ? "bg-slate-100 font-semibold text-slate-900"
+                      : "hover:bg-slate-50 text-slate-700",
                 )}
               >
                 {lang.label}

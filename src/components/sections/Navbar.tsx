@@ -38,7 +38,9 @@ export default function Navbar({ onScrollToSection }: NavbarProps) {
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         isScrolled
           ? "bg-white/80 backdrop-blur-md border-b border-slate-100 shadow-sm"
-          : "bg-transparent border-b border-transparent",
+          : isMenuOpen
+            ? "bg-slate-900/95 backdrop-blur-md border-b border-slate-800"
+            : "bg-transparent border-b border-transparent",
       )}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -112,30 +114,44 @@ export default function Navbar({ onScrollToSection }: NavbarProps) {
       {/* Mobile Menu Dropdown */}
       <AnimatePresence>
         {isMenuOpen && (
-          <AnimatePresence>
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              className="md:hidden bg-white border-b border-slate-100"
-            >
-              <div className="px-4 py-6 space-y-4 flex flex-col">
-                {navItems.map((item) => (
-                  <button
-                    key={item.key}
-                    onClick={() => onScrollToSection(item.id)}
-                    className="text-left text-lg font-medium text-slate-600 hover:text-slate-900"
-                  >
-                    {t.nav[item.key]}
-                  </button>
-                ))}
-                <Button className="w-full mt-4">{t.nav.getStarted}</Button>
-                <div className="flex justify-center pt-2">
-                  <LanguageSwitcher variant="mobile" />
-                </div>
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className={cn(
+              "md:hidden border-b transition-colors duration-300",
+              isScrolled
+                ? "bg-white border-slate-100"
+                : "bg-slate-900/95 backdrop-blur-md border-slate-800",
+            )}
+          >
+            <div className="px-4 py-6 space-y-4 flex flex-col">
+              {navItems.map((item) => (
+                <button
+                  key={item.key}
+                  onClick={() => onScrollToSection(item.id)}
+                  className={cn(
+                    "text-left text-lg font-medium transition-colors",
+                    isScrolled
+                      ? "text-slate-600 hover:text-slate-900"
+                      : "text-white/90 hover:text-white",
+                  )}
+                >
+                  {t.nav[item.key]}
+                </button>
+              ))}
+              <Button
+                variant={isScrolled ? "primary" : "white"}
+                onClick={() => (window.location.href = "tel:+855977979220")}
+                className="w-full mt-4"
+              >
+                {t.nav.getStarted}
+              </Button>
+              <div className="flex justify-center pt-2">
+                <LanguageSwitcher variant="mobile" />
               </div>
-            </motion.div>
-          </AnimatePresence>
+            </div>
+          </motion.div>
         )}
       </AnimatePresence>
     </nav>
