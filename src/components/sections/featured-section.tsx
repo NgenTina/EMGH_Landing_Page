@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useLanguage } from "../../contexts/language-context";
-import SectionHeading from "../ui/section-heading";
+import SectionHeading from "../common/section-heading";
 
 export default function FeaturedSection() {
   const { t } = useLanguage();

@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { useLanguage } from "../../contexts/language-context";
 import Button from "../ui/button";
-import LanguageSwitcher from "../ui/language-switcher";
+import LanguageSwitcher from "../common/language-switcher";
 import { cn } from "../../lib/utils";
 
 interface NavbarProps {

@@ -1,24 +1,24 @@
-import { motion } from 'framer-motion';
-import { Home, DollarSign, Key, ArrowRight } from 'lucide-react';
-import { useLanguage } from '../../contexts/language-context';
-import SectionHeading from '../ui/section-heading';
+import { motion } from "framer-motion";
+import { Home, DollarSign, Key, ArrowRight } from "lucide-react";
+import { useLanguage } from "../../contexts/language-context";
+import SectionHeading from "../common/section-heading";
 
 const services = [
   {
     icon: Home,
-    titleKey: 'buyTitle',
-    descKey: 'buyDesc'
+    titleKey: "buyTitle",
+    descKey: "buyDesc",
   },
   {
     icon: DollarSign,
-    titleKey: 'sellTitle',
-    descKey: 'sellDesc'
+    titleKey: "sellTitle",
+    descKey: "sellDesc",
   },
   {
     icon: Key,
-    titleKey: 'rentTitle',
-    descKey: 'rentDesc'
-  }
+    titleKey: "rentTitle",
+    descKey: "rentDesc",
+  },
 ];
 
 export default function ServicesSection() {
@@ -40,9 +40,14 @@ export default function ServicesSection() {
               className="p-8 rounded-3xl border border-slate-100 hover:border-slate-200 hover:shadow-xl transition-all duration-300 group bg-white"
             >
               <div className="w-14 h-14 bg-slate-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-slate-900 transition-colors duration-300">
-                <service.icon size={28} className="text-slate-900 group-hover:text-white transition-colors duration-300" />
+                <service.icon
+                  size={28}
+                  className="text-slate-900 group-hover:text-white transition-colors duration-300"
+                />
               </div>
-              <h3 className="text-xl font-serif font-medium mb-4">{t.services[service.titleKey as keyof typeof t.services]}</h3>
+              <h3 className="text-xl font-serif font-medium mb-4">
+                {t.services[service.titleKey as keyof typeof t.services]}
+              </h3>
               <p className="text-slate-500 leading-relaxed mb-6 text-sm">
                 {t.services[service.descKey as keyof typeof t.services]}
               </p>

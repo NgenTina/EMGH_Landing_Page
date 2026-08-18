@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { useLanguage } from '../../contexts/language-context';
-import FAQItem from '../ui/faq-item';
+import { useState } from "react";
+import { useLanguage } from "../../contexts/language-context";
+import FAQItem from "../common/faq-item";
 
 export default function FAQSection() {
   const { t } = useLanguage();
@@ -10,7 +10,7 @@ export default function FAQSection() {
     { q: t.faq.q1, a: t.faq.a1 },
     { q: t.faq.q2, a: t.faq.a2 },
     { q: t.faq.q3, a: t.faq.a3 },
-    { q: t.faq.q4, a: t.faq.a4 }
+    { q: t.faq.q4, a: t.faq.a4 },
   ];
 
   return (
@@ -25,7 +25,9 @@ export default function FAQSection() {
             />
           </div>
           <div>
-            <h2 className="text-3xl font-serif font-medium mb-8">{t.faq.title}</h2>
+            <h2 className="text-3xl font-serif font-medium mb-8">
+              {t.faq.title}
+            </h2>
             <div className="space-y-0">
               {faqs.map((faq, idx) => (
                 <FAQItem
@@ -33,7 +35,9 @@ export default function FAQSection() {
                   question={faq.q}
                   answer={faq.a}
                   isOpen={openFaqIndex === idx}
-                  onClick={() => setOpenFaqIndex(openFaqIndex === idx ? null : idx)}
+                  onClick={() =>
+                    setOpenFaqIndex(openFaqIndex === idx ? null : idx)
+                  }
                 />
               ))}
             </div>
